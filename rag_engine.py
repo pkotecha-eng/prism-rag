@@ -42,7 +42,7 @@ class RAGEngine:
         load_dotenv()
         self._api_key = os.environ.get("ANTHROPIC_API_KEY", "")
 
-        self._client = chromadb.PersistentClient(path="./chroma_db")
+        self._client = chromadb.EphemeralClient()
         self._embedder = SentenceTransformer("all-MiniLM-L6-v2")
         self._collection = self._client.get_or_create_collection(name="documents")
         self._anthropic: Optional[anthropic.Anthropic] = None
@@ -76,7 +76,7 @@ class RAGEngine:
         return total
 
     def query(
-        self, question: str, n_results: int = 5, distance_threshold: float = 1.0
+        self, question: str, n_results: int = 5, distance_threshold: float = 1.5
     ) -> dict:
         q_emb = self._embedder.encode([question], convert_to_numpy=True)
         raw = self._collection.query(
