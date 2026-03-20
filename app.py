@@ -15,10 +15,12 @@ st.set_page_config(
 )
 
 
-    @st.cache_resource
-    def get_rag_engine() -> RAGEngine:
-        return RAGEngine()
+@st.cache_resource
+def get_rag_engine() -> RAGEngine:
+    return RAGEngine()
 
+
+def _init_session_state() -> None:
     if "messages" not in st.session_state:
         st.session_state["messages"] = []
 
