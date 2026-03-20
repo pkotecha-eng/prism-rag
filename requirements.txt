@@ -1,0 +1,6 @@
+streamlit
+anthropic
+python-dotenv
+chromadb
+sentence-transformers
+pypdf2
