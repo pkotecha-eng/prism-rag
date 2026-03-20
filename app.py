@@ -15,9 +15,9 @@ st.set_page_config(
 )
 
 
-def _init_session_state() -> None:
-    if "rag" not in st.session_state:
-        st.session_state["rag"] = RAGEngine()
+    @st.cache_resource
+    def get_rag_engine() -> RAGEngine:
+        return RAGEngine()
 
     if "messages" not in st.session_state:
         st.session_state["messages"] = []
@@ -32,7 +32,7 @@ def _init_session_state() -> None:
 
 _init_session_state()
 
-rag: RAGEngine = st.session_state["rag"]
+rag: RAGEngine = get_rag_engine()
 doc_name = st.session_state.get("doc_name")
 
 
