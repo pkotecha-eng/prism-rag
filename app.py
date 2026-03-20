@@ -93,6 +93,24 @@ if uploaded_pdf is not None:
 
 st.sidebar.divider()
 
+st.sidebar.subheader("Or try the sample document")
+sample_path = os.path.join(
+    "sample_docs", "VELARA1_Study_Protocol_v1.0.pdf"
+)
+
+if os.path.exists(sample_path):
+    if st.sidebar.button("Load VELARA-1 Protocol Sample", use_container_width=True):
+        try:
+            rag.clear_collection()
+            st.session_state["messages"] = []
+            rag.ingest_pdf(sample_path, doc_name="VELARA-1 Protocol (Sample)")
+            st.session_state["doc_name"] = "VELARA-1 Protocol (Sample)"
+            st.success("✅ Sample document loaded — VELARA-1 Clinical Trial Protocol")
+        except Exception as e:
+            st.sidebar.error(f"Failed to load sample document: {e}")
+else:
+    st.sidebar.info("Sample document not found.")
+
 if st.sidebar.button("New Session", use_container_width=True):
     try:
         rag.clear_collection()
