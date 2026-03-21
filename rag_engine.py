@@ -94,22 +94,10 @@ class RAGEngine:
         dist_list = dists[0] if dists else []
         meta_list = metas[0] if metas else []
 
-        filtered_chunks: list[str] = []
-        filtered_dists: list[float] = []
-        filtered_metas: list[dict[str, Any]] = []
-
-        for i, chunk in enumerate(chunks):
-            dist = dist_list[i] if i < len(dist_list) else None
-            if dist is not None and dist > distance_threshold:
-                continue
-            filtered_chunks.append(chunk)
-            filtered_dists.append(dist if dist is not None else float("nan"))
-            filtered_metas.append(meta_list[i] if i < len(meta_list) else {})
-
         return {
-            "chunks": filtered_chunks,
-            "distances": filtered_dists,
-            "metadatas": filtered_metas,
+            "chunks": chunks,
+            "distances": dist_list,
+            "metadatas": meta_list,
         }
 
     def answer(self, question: str, conversation_history: list, n_results: int = 5) -> str:
