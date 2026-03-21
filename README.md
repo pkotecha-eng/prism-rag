@@ -20,3 +20,12 @@ A fictional VELARA-1 clinical trial protocol is included in sample_docs/ for tes
 1. Upload a PDF → document is chunked and embedded into ChromaDB
 2. Ask a question → query is embedded and matched against chunks
 3. Relevant chunks retrieved → Claude generates a grounded answer
+
+## Verify syntax (indentation, etc.)
+From the project root:
+
+```bash
+make check
+```
+
+This runs `python3 -m py_compile` on `app.py`, `rag_engine.py`, and `prompts.py` without starting Streamlit.

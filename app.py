@@ -105,9 +105,14 @@ if os.path.exists(sample_path):
         try:
             rag.clear_collection()
             st.session_state["messages"] = []
-            rag.ingest_pdf(sample_path, doc_name="VELARA-1 Protocol (Sample)")
+            n_chunks = rag.ingest_pdf(
+                sample_path, doc_name="VELARA-1 Protocol (Sample)"
+            )
             st.session_state["doc_name"] = "VELARA-1 Protocol (Sample)"
-            st.success("✅ Sample document loaded — VELARA-1 Clinical Trial Protocol")
+            if n_chunks == 0:
+                st.sidebar.error("⚠️ No text extracted — may be a scanned PDF")
+            else:
+                st.success(f"✅ Sample document loaded — {n_chunks} chunks indexed")
         except Exception as e:
             st.sidebar.error(f"Failed to load sample document: {e}")
 else:
